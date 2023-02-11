@@ -15,16 +15,16 @@ if __name__=="__main__":
     repetition=int(sys.argv[2])
     A = np.ones(N,dtype=np.float32) 
     B = np.ones(N,dtype=np.float32)
-    starttime=time.monotonic()
+    starttime=time.time()
     for i in range(int(repetition/2)):
         dp(N,A,B)
-    endtime=time.monotonic()
+    endtime=time.time()
     print("time diff 1:",endtime-starttime)
 
-    starttime=time.monotonic()
+    starttime=time.time()
     for i in range(int(repetition/2)):
         dp(N,A,B)
-    endtime=time.monotonic()
+    endtime=time.time()
     print("time diff 2:",endtime-starttime)
     average_time=(endtime-starttime)*2/repetition
 
