@@ -29,7 +29,7 @@ int main(int argc,char** argv){
         R=dp(N, pA, pB);
     }
     printf("%f\n",R);
-    
+
     clock_gettime(CLOCK_MONOTONIC, &start);
     for(int i=0;i<repetition/2;i++){
         R=dp(N, pA, pB);
