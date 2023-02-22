@@ -6,7 +6,7 @@
 #
 #SBATCH --account=edu # The account name for the job.
 #SBATCH --job-name=FindOptimalWorker_8 # The job name.
-#SBATCH -c 4 # The number of cpu cores to use.
+#SBATCH -c 1 # The number of cpu cores to use.
 #SBATCH --mem-per-cpu=120gb # The memory the job will use per cpu core.
 module load anaconda
 python main.py --num-of-workers 8

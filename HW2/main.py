@@ -13,14 +13,15 @@ import torch.nn.functional as F
 import torch.backends.cudnn as cudnn
 
 parser=argparse.ArgumentParser()
-parser.add_argument('--use-cuda',help='use cuda',type=bool,default=True)
+parser.add_argument('--use-cuda',help='use cuda',type=str,default="TRUE")
 parser.add_argument('--num-of-workers',help='num of workers',type=int,default=0)
 parser.add_argument('--optimizer',default='sgd')
+parser.add_argument('--batch-normalize',type=str,default="TRUE")
 args=parser.parse_args()
 
 if __name__ == '__main__':    
 
-    if args.use_cuda==True:
+    if args.use_cuda.upper()=="TRUE":
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
     else:
         device='cpu'
@@ -31,6 +32,9 @@ if __name__ == '__main__':
     print("num of workers: ",num_of_workers)
     optimizer_name=args.optimizer
     print("num of workers: ",optimizer_name)
+    batch_normalize=args.batch_normalize.upper()
+    print("batch normalize: ",batch_normalize)
+
 
     transform=transforms.Compose([
         transforms.RandomCrop(32,padding=4),
@@ -47,8 +51,11 @@ if __name__ == '__main__':
                                             shuffle=True,num_workers=num_of_workers,**kwargs)
     testloader = torch.utils.data.DataLoader(test_data, batch_size=100,
                                             shuffle=True,num_workers=num_of_workers,**kwargs)
+    if batch_normalize=='TRUE':
+        net = ResNet18()
+    else:
+        net=ResNet18_NoBN()
 
-    net = ResNet18()
     net = net.to(device)
     if device == 'cuda':
         net = torch.nn.DataParallel(net)
