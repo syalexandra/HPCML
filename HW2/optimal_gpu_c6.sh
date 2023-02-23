@@ -10,11 +10,10 @@
 #SBATCH --constraint=k80
 #SBATCH -c 1
 #SBATCH --mem-per-cpu=120gb
-module load cuda11.2/toolkit cuda11.2/blas cudnn8.1-cuda11.2
 module load anaconda
 
-for N in 0 4 8 16
+for OP in sgd sgd-nesterov adagrad adadelta adam
 do
-    python main.py --num-of-workers $N
+    python main.py --optimizer $OP --num-of-workers 4
 done
 # End of script

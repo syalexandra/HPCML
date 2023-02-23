@@ -30,7 +30,7 @@ if __name__ == '__main__':
 
     num_of_workers=args.num_of_workers
     print("num of workers: ",num_of_workers)
-    optimizer_name=args.optimizer
+    optimizer_name=args.optimizer.lower()
     print("num of workers: ",optimizer_name)
     batch_normalize=args.batch_normalize.upper()
     print("batch normalize: ",batch_normalize)
