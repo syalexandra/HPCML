@@ -9,5 +9,8 @@
 #SBATCH -c 1 # The number of cpu cores to use.
 #SBATCH --mem-per-cpu=120gb # The memory the job will use per cpu core.
 module load anaconda
-python main.py --num-of-workers 2
+for N in 0 4 8 12 16
+do
+    python main.py --num-of-workers $N
+done
 # End of script
