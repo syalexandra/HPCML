@@ -90,11 +90,11 @@ if __name__ == '__main__':
         training_time=0
         dataloading_start=time.perf_counter()
         for batch_idx, (inputs, targets) in enumerate(trainloader):
+            inputs, targets = inputs.to(device), targets.to(device)
             dataloading_end=time.perf_counter()
             dataloading_time+=(dataloading_end-dataloading_start)
-            
+
             training_start=time.perf_counter()
-            inputs, targets = inputs.to(device), targets.to(device)
             optimizer.zero_grad()
             outputs = net(inputs)
             loss = criterion(outputs, targets)
