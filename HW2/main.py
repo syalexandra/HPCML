@@ -15,7 +15,7 @@ import torch.backends.cudnn as cudnn
 parser=argparse.ArgumentParser()
 parser.add_argument('--use-cuda',help='use cuda',type=str,default="TRUE")
 parser.add_argument('--num-of-workers',help='num of workers',type=int,default=0)
-parser.add_argument('--optimizer',default='sgd')
+parser.add_argument('--optimizer',default='adam')
 parser.add_argument('--batch-normalize',type=str,default="TRUE")
 args=parser.parse_args()
 
@@ -155,6 +155,7 @@ if __name__ == '__main__':
     training_time_all_epoch=0
     total_time_all_epoch=0
     total_time_all_epoch_2=0
+    train_model(0)
     if device== 'cuda':
         torch.cuda.synchronize()
     for epoch in range(start_epoch, start_epoch+5):
