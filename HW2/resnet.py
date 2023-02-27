@@ -22,10 +22,14 @@ class BasicBlock(nn.Module):
                           kernel_size=1, stride=stride, bias=False),
                 nn.BatchNorm2d(self.expansion*planes)
             )
+            #print("basic block inside shortcut")
+
 
     def forward(self, x):
         out = F.relu(self.bn1(self.conv1(x)))
+        #print("conv1 in basicblock")
         out = self.bn2(self.conv2(out))
+        #print("conv2 in basicblock")
         out += self.shortcut(x)
         out = F.relu(out)
         return out
@@ -86,12 +90,14 @@ class ResNet(nn.Module):
 
     def forward(self, x):
         out = F.relu(self.bn1(self.conv1(x)))
+        #print("conv1 in resnet")
         out = self.layer1(out)
         out = self.layer2(out)
         out = self.layer3(out)
         out = self.layer4(out)
         out = F.avg_pool2d(out, 4)
         out = out.view(out.size(0), -1)
+        print(out.size())
         out = self.linear(out)
         return out
 

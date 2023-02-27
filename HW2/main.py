@@ -55,6 +55,9 @@ if __name__ == '__main__':
         net = ResNet18()
     else:
         net=ResNet18_NoBN()
+    print("num of parameters in this model")
+    print(sum(p.numel() for p in net.parameters() if p.requires_grad))
+    
 
     net = net.to(device)
     if device == 'cuda':
@@ -89,6 +92,7 @@ if __name__ == '__main__':
         dataloading_time=0
         training_time=0
         dataloading_start=time.perf_counter()
+
         for batch_idx, (inputs, targets) in enumerate(trainloader):
             inputs, targets = inputs.to(device), targets.to(device)
             dataloading_end=time.perf_counter()
@@ -99,7 +103,8 @@ if __name__ == '__main__':
             outputs = net(inputs)
             loss = criterion(outputs, targets)
             loss.backward()
-            optimizer.step()
+            print("number of gradient")
+            print(sum(p.grad.numel() for p in net.parameters() if p.requires_grad))
             training_end=time.perf_counter()
             training_time+=(training_end-training_start)
             
@@ -147,15 +152,20 @@ if __name__ == '__main__':
     dataloadtime_time_all_epoch=0
     training_time_all_epoch=0
     total_time_all_epoch=0
+    total_time_all_epoch_2=0
+
     for epoch in range(start_epoch, start_epoch+5):
+        starttime=time.timer()
         dataloading_time,training_time,total_time=train_model(epoch)
+        endttime=time.timer()
         dataloadtime_time_all_epoch+=dataloading_time
         training_time_all_epoch+=training_time
         total_time_all_epoch+=total_time
+        total_time_all_epoch_2+=endttime-starttime
         #test_model(epoch)
         scheduler.step()
         
-    print("data loading time for all epochs: ",dataloadtime_time_all_epoch/5,"training time for all epochs: ",training_time_all_epoch/5,"total time for all epochs: ",total_time_all_epoch/5)
+    print("data loading time for all epochs: ",dataloadtime_time_all_epoch/5,"training time for all epochs: ",training_time_all_epoch/5,"total time for all epochs: ",total_time_all_epoch/5,"total time for all epochs 2:",total_time_all_epoch_2/5)
 
 
 
